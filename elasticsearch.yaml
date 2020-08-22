@@ -45,7 +45,6 @@ roleRef:
   name: elasticsearch-logging
   apiGroup: ""
 ---
-# Elasticsearch deployment itself
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -77,7 +76,6 @@ spec:
       - image: k8s.gcr.io/elasticsearch:v6.2.4
         name: elasticsearch-logging
         resources:
-          # need more cpu upon initialization, therefore burstable class
           limits:
             cpu: 1000m
           requests:
@@ -100,15 +98,6 @@ spec:
       volumes:
       - name: elasticsearch-logging
         emptyDir: {}
-      # Elasticsearch requires vm.max_map_count to be at least 262144.
-      # If your OS already sets up this number to a higher value, feel free
-      # to remove this init container.
-      initContainers:
-      - image: alpine:3.6
-        command: ["/sbin/sysctl", "-w", "vm.max_map_count=262144"]
-        name: elasticsearch-logging-init
-        securityContext:
-          privileged: true
 ---
 apiVersion: v1
 kind: Service
