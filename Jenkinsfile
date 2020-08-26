@@ -6,7 +6,7 @@ pipeline {
 
     stage('Checkout Source') {
       steps {
-        git url:'https://github.com/tharanii/elk.git', branch:'master'
+        git url:'https://github.com/tharanii/Jenkinsdeploy.git', branch:'master'
       }
     }
     stage('Deploy elastic') {
